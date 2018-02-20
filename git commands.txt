@@ -1,0 +1,6 @@
+git clone https://github.com/dankin96/Data_Mining_in_Action_2018_Spring.git
+git remote add upstream https://github.com/vkantor/Data_Mining_in_Action_2018_Spring.git
+git fetch upstream
+git pull upstream master
+git commit -m "First commit"
+git push
