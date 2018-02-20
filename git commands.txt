@@ -4,3 +4,6 @@ git fetch upstream
 git pull upstream master
 git commit -m "First commit"
 git push
+git stash
+git pull upstream master
+git stash pop
