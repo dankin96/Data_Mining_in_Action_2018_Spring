@@ -10,7 +10,7 @@ import json
 import sys
 
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.realpath('__file__'))
 
 
 def signal_handler(signum, frame):
@@ -44,6 +44,8 @@ class Checker(object):
         
         return score
 
+        return score
+
 
 if __name__ == '__main__':
-    print(Checker().check(SCRIPT_DIR + '/xgboost_params_example.json'))
+    print(Checker().check())

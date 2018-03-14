@@ -1,0 +1,7 @@
+{
+    "learning_rate": 0.015, 
+    "max_depth": 8, 
+    "n_estimators": 400, 
+    "min_child_weight": 14,
+    "seed": 42
+}
