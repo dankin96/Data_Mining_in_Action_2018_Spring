@@ -1,9 +1,6 @@
-#coding=utf-8
-
 from sklearn.base import BaseEstimator
 from sklearn.tree import DecisionTreeRegressor
-import numpy as np
-
+from scipy.special import expit
 
 # Параметрами с которыми вы хотите обучать деревья
 TREE_PARAMS_DICT = {
@@ -13,7 +10,7 @@ TREE_PARAMS_DICT = {
     'random_state': 42,
 }
 # Параметр tau (learning_rate) для вашего GB
-TAU = 0.19
+TAU = 0.20
 
 
 class SimpleGB(BaseEstimator):
@@ -21,30 +18,16 @@ class SimpleGB(BaseEstimator):
         self.tree_params_dict = tree_params_dict
         self.iters = iters
         self.tau = tau
-        
+    
     def fit(self, X_data, y_data):
         self.base_algo = DecisionTreeRegressor(**self.tree_params_dict).fit(X_data, y_data)
         self.estimators = []
         curr_pred = self.base_algo.predict(X_data)
         for iter_num in range(self.iters):
-            # Нужно посчитать градиент функции потерь
             grad = expit(curr_pred) - y_data
-            # Нужно обучить DecisionTreeRegressor предсказывать антиградиент
-            # Не забудьте про self.tree_params_dict
             algo = DecisionTreeRegressor(**self.tree_params_dict).fit(X_data, -grad)
-
             self.estimators.append(algo)
-            # Обновите предсказания в каждой точке
             curr_pred += self.tau * algo.predict(X_data)
-            # Нужно посчитать градиент функции потерь
-            '''grad = 0. # TODO
-            # Нужно обучить DecisionTreeRegressor предсказывать антиградиент
-            # Не забудьте про self.tree_params_dict
-            algo = DecisionTreeRegressor().fit(X_data, y_data) # TODO
-
-            self.estimators.append(algo)
-            # Обновите предсказания в каждой точке
-            curr_pred += 0. # TODO '''
         return self
     
     def predict(self, X_data):
